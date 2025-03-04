@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {Server} from "@modelcontextprotocol/sdk/server/index.js";
 import {StdioServerTransport} from "@modelcontextprotocol/sdk/server/stdio.js";
-import {CallToolRequestSchema, CallToolResult, ListToolsRequestSchema,} from "@modelcontextprotocol/sdk/types.js";
+import {CallToolRequestSchema, CallToolResult, ListToolsRequestSchema, ListResourcesRequestSchema, ListResourceTemplatesRequestSchema} from "@modelcontextprotocol/sdk/types.js";
 
 // Logging is enabled only if LOG_ENABLED environment variable is set to 'true'
 const LOG_ENABLED = process.env.LOG_ENABLED === 'true';
@@ -253,6 +253,19 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         log("Error handling CallToolRequestSchema request:", error);
         throw error;
     }
+});
+
+server.setRequestHandler(ListResourcesRequestSchema, async () => {
+  return {
+    resources: [],
+  };
+});
+
+server.setRequestHandler(ListResourceTemplatesRequestSchema, async () => {
+  return {
+    templates: [],
+    resourceTemplates: [],
+  };
 });
 
 /**
